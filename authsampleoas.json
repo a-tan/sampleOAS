@@ -1,0 +1,126 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Echo2",
+    "version" : "2020-12-21 18:01:18UTC"
+  },
+  "servers" : [ {
+    "url" : "https://yw5ns3qcie.execute-api.us-east-1.amazonaws.com/{basePath}",
+    "variables" : {
+      "basePath" : {
+        "default" : ""
+      }
+    }
+  } ],
+  "paths" : {
+    "/Echo" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /Echo"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:572320329544:function:Echo/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/Random" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /Random"
+          }
+        },
+        "security" : [ {
+          "sigv4" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:572320329544:function:Echo/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/Random/{pathParam+}" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /Random/{pathParam+}"
+          }
+        },
+        "security" : [ {
+          "cognito" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:572320329544:function:Echo/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/{proxy+}" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /{proxy+}"
+          }
+        },
+        "security" : [ {
+          "test" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:572320329544:function:Echo/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "cognito" : {
+        "type" : "oauth2",
+        "flows" : { },
+        "x-amazon-apigateway-authorizer" : {
+          "identitySource" : "$request.header.Authorization",
+          "jwtConfiguration" : {
+            "audience" : [ "test" ],
+            "issuer" : "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_5WWpPxUnN"
+          },
+          "type" : "jwt"
+        }
+      },
+      "test" : {
+        "type" : "apiKey",
+        "name" : "Authorization",
+        "in" : "header",
+        "x-amazon-apigateway-authorizer" : {
+          "identitySource" : "$request.header.Authorization",
+          "authorizerUri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:572320329544:function:EchoPython/invocations",
+          "authorizerPayloadFormatVersion" : "2.0",
+          "authorizerResultTtlInSeconds" : 300,
+          "type" : "request",
+          "enableSimpleResponses" : true
+        }
+      },
+      "sigv4" : {
+        "type" : "apiKey",
+        "name" : "Authorization",
+        "in" : "header",
+        "x-amazon-apigateway-authtype" : "awsSigv4"
+      }
+    }
+  },
+  "x-amazon-apigateway-importexport-version" : "1.0"
+}
